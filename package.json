@@ -7,25 +7,37 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "nodemon --exec node --loader ts-node/esm --experimental-specifier-resolution=node index.ts",
-    "start": "npm run build && node build/index.js"
+    "dev": "tsx watch index.ts",
+    "start": "npm run build && node build/index.js",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/prisma": "^5.0.4",
     "@prisma/client": "^6.16.2",
+    "adminjs": "^7.8.17",
+    "body-parser": "^2.2.0",
+    "connect-pg-simple": "^10.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
-    "prisma": "^6.16.2"
+    "express-session": "^1.18.2",
+    "prisma": "^6.16.2",
+    "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
     "@types/node": "^24.5.2",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }

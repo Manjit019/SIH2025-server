@@ -1,5 +1,4 @@
-
-import prisma from "./prisma"
+import { prisma } from "./prisma";
 
 const connectDB = async () => {
     try {
@@ -11,4 +10,4 @@ const connectDB = async () => {
     }
 };
 
-export default connectDB;
+export {connectDB} ;

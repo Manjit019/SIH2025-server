@@ -1,11 +1,6 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "public"."Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 
-  - You are about to drop the `Department` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Employee` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Migrant` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "public"."BloodGroup" AS ENUM ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-');
 
@@ -23,18 +18,6 @@ CREATE TYPE "public"."HealthPassStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTE
 
 -- CreateEnum
 CREATE TYPE "public"."AdminRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'OPERATOR', 'VIEWER');
-
--- DropIndex
-DROP INDEX "public"."Doctor_departmentId_idx";
-
--- DropTable
-DROP TABLE "public"."Department";
-
--- DropTable
-DROP TABLE "public"."Employee";
-
--- DropTable
-DROP TABLE "public"."Migrant";
 
 -- CreateTable
 CREATE TABLE "public"."migrant_workers" (
@@ -175,6 +158,32 @@ CREATE TABLE "public"."audit_logs" (
     CONSTRAINT "audit_logs_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "public"."Doctor" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "phone" BIGINT NOT NULL,
+    "email" TEXT NOT NULL,
+    "specialization" TEXT NOT NULL,
+    "departmentId" TEXT NOT NULL,
+    "hospitalId" TEXT NOT NULL,
+    "joinedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Doctor_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."Hospital" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "address" JSONB NOT NULL,
+    "phone" BIGINT NOT NULL,
+    "established" TIMESTAMP(3) NOT NULL,
+    "capacity" INTEGER NOT NULL,
+
+    CONSTRAINT "Hospital_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "migrant_workers_worker_id_key" ON "public"."migrant_workers"("worker_id");
 
@@ -213,3 +222,9 @@ CREATE UNIQUE INDEX "admins_username_key" ON "public"."admins"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "admins_email_key" ON "public"."admins"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Doctor_email_key" ON "public"."Doctor"("email");
+
+-- CreateIndex
+CREATE INDEX "Doctor_hospitalId_idx" ON "public"."Doctor"("hospitalId");
